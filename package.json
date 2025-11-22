@@ -1,0 +1,61 @@
+{
+  "name": "@tool-chain/core",
+  "version": "1.0.0",
+  "description": "强大的链式异步执行库 - 支持 ESM 和 CommonJS 双模块格式。用优雅的 API 构建复杂的异步工作流，提供完整的 TypeScript 类型安全和灵活的错误处理。",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "npm run build:esm && npm run build:cjs && npm run build:types",
+    "build:esm": "tsc --module esnext --outDir dist/esm",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "build:types": "tsc --emitDeclarationOnly --outDir dist/types",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "format": "prettier . --write",
+    "lint": "eslint . --fix"
+  },
+  "keywords": [
+    "toolchain",
+    "async",
+    "chain",
+    "promise",
+    "workflow",
+    "typescript",
+    "error-handling",
+    "retry",
+    "timeout",
+    "utility",
+    "链式",
+    "异步",
+    "工作流",
+    "async-chain",
+    "chaining"
+  ],
+  "author": "HU SHUKANG",
+  "license": "MIT",
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^6.0.0",
+    "@types/jest": "^29.0.0",
+    "@types/node": "^20.0.0",
+    "jest": "^29.0.0",
+    "prettier": "^3.0.0",
+    "ts-jest": "^29.0.0",
+    "typescript": "^5.8.3",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.1",
+    "@eslint/js": "^9.28.0",
+    "typescript-eslint": "^8.33.0"
+  }
+}
