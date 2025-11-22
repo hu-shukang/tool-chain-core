@@ -591,9 +591,9 @@ MIT License - 詳細は[LICENSE](LICENSE)ファイルを参照
 
 ## 🤝 サポートとフィードバック
 
-- **GitHubリポジトリ** - [hu-shukang/toolchain_core](https://github.com/hu-shukang/toolchain_core)
-- **イシュートラッカー** - [イシュー報告](https://github.com/hu-shukang/toolchain_core/issues)
-- **ディスカッション** - [GitHubディスカッション](https://github.com/hu-shukang/toolchain_core/discussions)
+- **GitHubリポジトリ** - [hu-shukang/toolchain_core](https://github.com/hu-shukang/tool-chain-core)
+- **イシュートラッカー** - [イシュー報告](https://github.com/hu-shukang/tool-chain-core/issues)
+- **ディスカッション** - [GitHubディスカッション](https://github.com/hu-shukang/tool-chain-core/discussions)
 - **著者** - HU SHUKANG
 
 このライブラリが役に立つなら、⭐ Starをお願いします！
@@ -604,4 +604,4 @@ MIT License - 詳細は[LICENSE](LICENSE)ファイルを参照
 
 ---
 
-**最終更新: v1.0.0** | [GitHubリポジトリ](https://github.com/hu-shukang/toolchain_core)
+**最終更新: v1.0.0** | [GitHubリポジトリ](https://github.com/hu-shukang/tool-chain-core)

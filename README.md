@@ -660,7 +660,7 @@ We welcome Pull Requests! Please follow these steps:
 1. **Fork the repository**
 
    ```bash
-   # Visit https://github.com/hu-shukang/toolchain_core
+   # Visit https://github.com/hu-shukang/tool-chain-core
    # Click the Fork button
    ```
 
@@ -730,60 +730,6 @@ Before submitting a PR, ensure:
 - ✅ New features have corresponding tests
 - ✅ Documentation is updated if needed
 
-## 🚀 Publishing to npm
-
-### First Time Publishing
-
-1. **Register account at npmjs.com**
-   - Visit [npmjs.com](https://www.npmjs.com)
-   - Create a free account
-
-2. **Login locally**
-
-   ```bash
-   npm login
-   ```
-
-   Enter your username, password, and email
-
-3. **Publish package**
-   ```bash
-   npm publish
-   ```
-
-### Subsequent Updates
-
-1. **Update version number**
-
-   Follow [Semantic Versioning](https://semver.org/):
-
-   ```
-   MAJOR.MINOR.PATCH (e.g.: 1.2.3)
-   ```
-
-   - **MAJOR (1.x.x)** - Incompatible API changes
-   - **MINOR (x.1.x)** - New features, backward compatible
-   - **PATCH (x.x.1)** - Bug fixes, backward compatible
-
-   Edit `package.json`:
-
-   ```json
-   {
-     "version": "1.1.0"
-   }
-   ```
-
-2. **Build project**
-
-   ```bash
-   npm run build
-   ```
-
-3. **Publish update**
-   ```bash
-   npm publish
-   ```
-
 ## 📚 Related Resources
 
 - [TypeScript Documentation](https://www.typescriptlang.org/)
@@ -800,9 +746,9 @@ MIT License - See [LICENSE](LICENSE) file for details
 
 ## 🤝 Support and Feedback
 
-- **GitHub Repository** - [hu-shukang/toolchain_core](https://github.com/hu-shukang/toolchain_core)
-- **Issue Tracker** - [Submit Issues](https://github.com/hu-shukang/toolchain_core/issues)
-- **Discussions** - [GitHub Discussions](https://github.com/hu-shukang/toolchain_core/discussions)
+- **GitHub Repository** - [hu-shukang/toolchain_core](https://github.com/hu-shukang/tool-chain-core)
+- **Issue Tracker** - [Submit Issues](https://github.com/hu-shukang/tool-chain-core/issues)
+- **Discussions** - [GitHub Discussions](https://github.com/hu-shukang/tool-chain-core/discussions)
 - **Author** - HU SHUKANG
 
 If you find this library helpful, please consider giving it a ⭐ Star!
@@ -813,4 +759,4 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and updates.
 
 ---
 
-**Last Updated: v1.0.0** | [GitHub Repository](https://github.com/hu-shukang/toolchain_core)
+**Last Updated: v1.0.0** | [GitHub Repository](https://github.com/hu-shukang/tool-chain-core)

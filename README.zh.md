@@ -1177,7 +1177,7 @@ npm run format
 1. **Fork 仓库**
 
    ```bash
-   # 访问 https://github.com/hu-shukang/toolchain_core
+   # 访问 https://github.com/hu-shukang/tool-chain-core
    # 点击 Fork 按钮
    ```
 
@@ -1246,68 +1246,6 @@ Closes #123
 - ✅ 代码经过格式化（`npm run format`）
 - ✅ 新功能编写了相应的测试
 - ✅ 更新了文档（如有必要）
-
-## 🚀 发布到 npm
-
-### 第一次发布
-
-1. **在 npmjs.com 注册账户**
-   - 访问 [npmjs.com](https://www.npmjs.com)
-   - 创建免费账户
-
-2. **本地登录**
-
-   ```bash
-   npm login
-   ```
-
-   输入你的用户名、密码和邮箱
-
-3. **发布包**
-   ```bash
-   npm publish
-   ```
-
-### 后续更新
-
-1. **更新版本号**
-
-   遵循 [语义化版本 (Semantic Versioning)](https://semver.org/lang/zh-CN/)：
-
-   ```
-   MAJOR.MINOR.PATCH (例如：1.2.3)
-   ```
-
-   - **MAJOR (1.x.x)** - 不兼容的 API 改变
-   - **MINOR (x.1.x)** - 新增功能，向下兼容
-   - **PATCH (x.x.1)** - 修复问题，向下兼容
-
-   编辑 `package.json`：
-
-   ```json
-   {
-     "version": "1.1.0"
-   }
-   ```
-
-2. **构建项目**
-
-   ```bash
-   npm run build
-   ```
-
-3. **发布更新**
-   ```bash
-   npm publish
-   ```
-
-### 发布前检查清单
-
-- ✅ 更新 `package.json` 中的版本号
-- ✅ 更新 `README.zh.md` 中的变更记录（如有）
-- ✅ 运行所有测试：`npm test`
-- ✅ 构建项目：`npm run build`
-- ✅ 检查 `dist/` 目录已生成
 
 ## 🐛 故障排除
 
@@ -1380,9 +1318,9 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ## 🤝 支持和反馈
 
-- **GitHub 仓库** - [hu-shukang/toolchain_core](https://github.com/hu-shukang/toolchain_core)
-- **问题报告** - [提交 Issue](https://github.com/hu-shukang/toolchain_core/issues)
-- **讨论区** - [GitHub Discussions](https://github.com/hu-shukang/toolchain_core/discussions)
+- **GitHub 仓库** - [hu-shukang/toolchain_core](https://github.com/hu-shukang/tool-chain-core)
+- **问题报告** - [提交 Issue](https://github.com/hu-shukang/tool-chain-core/issues)
+- **讨论区** - [GitHub Discussions](https://github.com/hu-shukang/tool-chain-core/discussions)
 - **作者** - HU SHUKANG
 
 如果你觉得这个库有帮助，欢迎 ⭐ Star 支持！
@@ -1393,4 +1331,4 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ---
 
-**最后更新：v1.0.0** | [GitHub 仓库](https://github.com/hu-shukang/toolchain_core)
+**最后更新：v1.0.0** | [GitHub 仓库](https://github.com/hu-shukang/tool-chain-core)
