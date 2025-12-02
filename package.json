@@ -1,6 +1,6 @@
 {
   "name": "@tool-chain/core",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "强大的链式异步执行库 - 支持 ESM 和 CommonJS 双模块格式。用优雅的 API 构建复杂的异步工作流，提供完整的 TypeScript 类型安全和灵活的错误处理。",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -45,17 +45,17 @@
   "author": "HU SHUKANG",
   "license": "MIT",
   "devDependencies": {
+    "@eslint/js": "^9.28.0",
     "@trivago/prettier-plugin-sort-imports": "^6.0.0",
     "@types/jest": "^29.0.0",
     "@types/node": "^20.0.0",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.1",
     "jest": "^29.0.0",
     "prettier": "^3.0.0",
     "ts-jest": "^29.0.0",
     "typescript": "^5.8.3",
-    "eslint": "^9.28.0",
-    "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-prettier": "^5.4.1",
-    "@eslint/js": "^9.28.0",
     "typescript-eslint": "^8.33.0"
   }
 }

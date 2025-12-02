@@ -34,6 +34,12 @@ pnpm add @tool-chain/core
 
 ### 30秒クイック例
 
+ライブラリは非同期ワークフロー管理用の2つの強力なツールを提供します：
+
+#### オプション1：Chains - 全ての前のステップ結果にアクセス
+
+複数の履歴結果にアクセスする必要がある場合は`Chains`を使用：
+
 ```typescript
 import { Chains } from '@tool-chain/core';
 
@@ -51,23 +57,52 @@ console.log(result); // 出力: 25
 // - .invoke()はチェーン全体を実行して最後のステップの結果を返します
 ```
 
-これだけです！基本を習得しました。続けてもっと強力な機能を学びましょう。
+#### オプション2：Tasks - ステップ間の清潔なパラメータ伝達
+
+パラメータベースのフロー制御を好む場合は`Tasks`を使用：
+
+```typescript
+import { Tasks } from '@tool-chain/core';
+
+await new Tasks()
+  .addTask(async ({ next }) => {
+    const data = 10;
+    await next(data * 2); // 次のタスクに20を渡す
+  })
+  .addTask(async ({ param, next }) => {
+    // param = 20（前のタスクから）
+    await next(param + 5); // 次のタスクに25を渡す
+  })
+  .addTask(async ({ param }) => {
+    console.log(param); // 出力: 25
+  })
+  .invoke();
+```
+
+これだけです！基本を習得しました。続けてもっと強力な機能を学び、どのツールを使うべきか理解しましょう。
 
 ## ✨ 主な機能
 
-### 🔗 **エレガントなチェーンAPI**
+### 🔗 **2つの強力な実行パターン**
+
+#### Chains - 複数結果へのアクセス
 
 - `.chain()`メソッドで非同期ワークフローを構築
 - 全ての履歴結果にアクセス（`r1`, `r2`, `r3`...）
-- 自動タイプ推論で完全なTypeScriptタイプセーフ
-- 同期関数と非同期関数を混在させて使用可能
-- 単一チェーンで20+ステップをサポート
+- 複数の中間結果が必要なパイプラインに最適
+
+#### Tasks - パラメータ伝達
+
+- `.addTask()`メソッドで順序実行タスク
+- `next(param)`でステップ間のクリーンなパラメータ伝達
+- 線形データフローのワークフローに最適
 
 ### 🛡️ **柔軟なエラー処理**
 
 - **デフォルトモード**: エラーは直接スロー、チェーンを中断
-- **キャプチャモード**: `{ withoutThrow: true }`でステップごとにエラーをキャプチャ
-- **ミックスモード**: 同じチェーン内で両方のエラー処理戦略を柔軟に混合
+- **キャプチャモード**: `{ withoutThrow: true }`でステップごとにエラーをキャプチャ（Chainsのみ）
+- **ミックスモード**: 同じチェーン内で両方のエラー処理戦略を柔軟に混合（Chainsのみ）
+- **タスクエラー**: エラーは即座に伝播、後続タスク停止（Tasks）
 - try-catchで全体をラップする必要なし
 
 ### 🎯 **スマートなリトライとタイムアウト**
@@ -76,10 +111,12 @@ console.log(result); // 出力: 25
 - 柔軟なリトライ条件（エラータイプ、メッセージ、または正規表現）
 - 設定可能なリトライ遅延（即座のリトライによるリソース浪費を防止）
 - 実行タイムアウト制御（長時間のハング防止）
+- **注記**: リトライとタイムアウト機能はChainsで利用可能；Tasksはシンプルさに注力
 
 ### 📊 **初期データと状態管理**
 
-- 構成時に初期データを渡す、チェーン内で`r1`として利用可能
+- **Chains**: 構成時に初期データを渡す、チェーン内で`r1`として利用可能
+- **Tasks**: `next(param)`でタスク間のパラメータ伝達
 - 全ステップの実行結果を自動保存
 - 柔軟なデータフローと状態管理
 
@@ -87,8 +124,9 @@ console.log(result); // 出力: 25
 
 - 完全なタイプ定義ファイル（`.d.ts`）
 - 厳格モードのコンパイル設定
-- スマートなタイプ推論（20+ステップのチェーンをサポート）
+- スマートなタイプ推論（Chainsで20+ステップをサポート；Tasksで完全なタイプセーフ）
 - 完璧なIDE自動補完とタイプチェック
+- Tasksでのタイプセーフパラメータ伝達はコンパイル時安全を保証
 
 ### 📦 **デュアルモジュールサポート**
 
@@ -121,7 +159,7 @@ console.log(result); // "25"
 - `r1`はステップ1の結果、`r2`はステップ2の結果など
 - チェーン全体を実行するために最後に`.invoke()`を呼ぶ必要があります
 
-### ファクトリ関数
+#### ファクトリ関数
 
 `createChains()`ファクトリ関数でより簡潔なコードを記述：
 
@@ -136,7 +174,7 @@ const result = await createChains()
 console.log(result); // "HELLO"
 ```
 
-### 初期データの使用
+#### 初期データの使用
 
 構成時に初期データを渡す、チェーン内で`r1`として利用可能：
 
@@ -155,9 +193,9 @@ console.log(result); // 150
 - 再利用可能なデータ処理フローの構築
 - クラスメソッド内でのチェーン初期化
 
-### エラー処理 - 深掘り
+#### エラー処理 - 深掘り
 
-#### 方法1: デフォルトスロー模式
+##### 方法1: デフォルトスロー模式
 
 エラーが直接スロー、チェーン実行を中断。try-catchで処理：
 
@@ -176,7 +214,7 @@ try {
 **利点:** シンプル明確、エラーは即座に中断
 **欠点:** チェーン全体をtry-catchでラップ必要
 
-#### 方法2: キャプチャ模式（推奨）
+##### 方法2: キャプチャ模式（推奨）
 
 `{ withoutThrow: true }`でエラーをキャプチャしてオブジェクトとしてラップ、チェーン継続：
 
@@ -212,7 +250,7 @@ console.log(result); // "DEFAULT"
 **利点:** 柔軟なエラー処理、チェーン継続、フォールバック可能
 **欠点:** 各ステップでエラーをチェック必要
 
-#### 方法3: ミックス模式
+##### 方法3: ミックス模式
 
 同じチェーン内で両方のエラー処理戦略を混合：
 
@@ -252,9 +290,9 @@ const result = await new Chains()
 - キャプチャ模式のエラーオブジェクトは一貫した形式
 - ミックス使用は重要なポイントで守備的プログラミング、他の場所では素早く失敗
 
-### リトライとタイムアウト - 深掘り
+#### リトライとタイムアウト - 深掘り
 
-#### 基本的なリトライ
+##### 基本的なリトライ
 
 失敗時に指定回数の自動リトライ：
 
@@ -278,7 +316,7 @@ const result = await new Chains()
 2. 失敗時 → retryDelay待機 → リトライ
 3. 成功またはリトライ回数消費まで繰り返し
 
-#### スマートなリトライ条件
+##### スマートなリトライ条件
 
 特定のエラーのみリトライ、他はすぐに失敗：
 
@@ -314,7 +352,7 @@ retryWhen: 'timeout'; // エラーメッセージに'timeout'を含む場合リ�
 retryWhen: /timeout|Rate limited/; // どちらかにマッチする場合リトライ
 ```
 
-#### タイムアウト制御
+##### タイムアウト制御
 
 リクエストが無期限にハングするのを防止：
 
@@ -344,7 +382,7 @@ const result = await new Chains()
 // Error: Timeout exceeded: operation took longer than 5000ms
 ```
 
-### 非同期操作チェーン
+#### 非同期操作チェーン
 
 複数の非同期操作をチェーン、自動Promise処理：
 
@@ -371,7 +409,7 @@ const result = await new Chains()
   .invoke();
 ```
 
-### 同期と非同期の混合
+#### 同期と非同期の混合
 
 同期と非同期の操作を自由に混合：
 
@@ -395,6 +433,136 @@ const result = await new Chains()
   .invoke();
 
 console.log(result); // 25
+```
+
+### Tasks 使用
+
+`Tasks`クラスは、タスク間のパラメータ伝達をサポートする軽量な順序実行方法を提供します。全ての前のステップ結果へのアクセスに最適化された`Chains`とは異なり、`Tasks`は明確なパラメータベースのフロー制御に焦点を当てています。
+
+#### 基本的なタスク実行
+
+複数のタスクを順序で実行し、各タスクが`next()`を呼び出してデータを次のタスクに渡すことができます：
+
+```typescript
+import { Tasks, createTasks } from '@tool-chain/core';
+
+await new Tasks()
+  .addTask(async ({ next }) => {
+    console.log('タスク 1');
+    await next(); // 次のタスクに続行
+  })
+  .addTask(async ({ next }) => {
+    console.log('タスク 2');
+    await next(42); // 次のタスクにパラメータを渡す
+  })
+  .addTask<number>(async ({ param }) => {
+    console.log(`タスク 3 受け取った: ${param}`); // 42
+  })
+  .invoke();
+```
+
+#### タスク間のパラメータ伝達
+
+前のタスクからパラメータを受け取ると、完全なタイプセーフで処理できます：
+
+```typescript
+import { createTasks } from '@tool-chain/core';
+
+await createTasks()
+  .addTask<string>(async ({ next }) => {
+    // このタスクは次のタスクに文字列を渡す
+    await next('hello');
+  })
+  .addTask(async ({ param, next }) => {
+    // param は string として推論される（オプションではない）
+    console.log(param); // "hello"
+    await next({ id: 1, name: 'Alice' });
+  })
+  .addTask<{ id: number; name: string }>(async ({ param }) => {
+    // param は { id: number; name: string } として推論される
+    console.log(param.name); // "Alice"
+  })
+  .invoke();
+```
+
+#### finish() による早期終了
+
+いつでも`finish()`メソッドを使用してタスク実行を停止できます：
+
+```typescript
+await new Tasks()
+  .addTask(async ({ next }) => {
+    console.log('タスク 1');
+    await next();
+  })
+  .addTask(async ({ finish }) => {
+    console.log('タスク 2');
+    await finish(); // ここで停止、タスク 3 は実行されない
+  })
+  .addTask(async () => {
+    console.log('タスク 3'); // 実行されない
+  })
+  .invoke();
+```
+
+#### 自動タスク終了
+
+タスクが`next()`または`finish()`を呼び出さない場合、後続のタスクは自動的に停止します：
+
+```typescript
+await new Tasks()
+  .addTask(async ({ next }) => {
+    console.log('タスク 1');
+    await next();
+  })
+  .addTask(async () => {
+    console.log('タスク 2');
+    // next() または finish() 呼び出しなし - 自動停止
+  })
+  .addTask(async () => {
+    console.log('タスク 3'); // 実行されない
+  })
+  .invoke();
+```
+
+#### Tasks でのエラー処理
+
+任意のタスクでスローされたエラーは実行を停止して伝播します：
+
+```typescript
+try {
+  await new Tasks()
+    .addTask(async ({ next }) => {
+      console.log('タスク 1');
+      await next();
+    })
+    .addTask(async () => {
+      throw new Error('タスク 2 失敗');
+    })
+    .addTask(async () => {
+      console.log('タスク 3'); // 実行されない
+    })
+    .invoke();
+} catch (error) {
+  console.error('エラー:', error.message); // "タスク 2 失敗"
+}
+```
+
+#### ファクトリ関数
+
+`createTasks()`を使用してより簡潔なコードを書くことができます：
+
+```typescript
+import { createTasks } from '@tool-chain/core';
+
+await createTasks()
+  .addTask(async ({ next }) => {
+    await next('データ');
+  })
+  .addTask(async ({ param }) => {
+    console.log(param);
+  })
+  .invoke();
 ```
 
 ## 🎯 一般的な使用ケース
@@ -600,7 +768,7 @@ MIT License - 詳細は[LICENSE](LICENSE)ファイルを参照
 
 ## 更新ログ
 
-バージョン履歴と更新内容については[CHANGELOG.md](CHANGELOG.md)を参照。
+バージョン履歴と更新内容については[CHANGELOG.md](CHANGELOG.ja.md)を参照。
 
 ---
 

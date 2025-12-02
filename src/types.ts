@@ -784,3 +784,25 @@ export abstract class ChainsInit<TLastResult = any> extends ChainsBase<
 > {
   // Inherits chain() and invoke() from ActionsBase
 }
+
+/**
+ * Next function type - used to execute the next task and pass parameters
+ * @template U The parameter type to pass to the next task
+ */
+interface NextFn {
+  <U = undefined>(value?: U): Promise<void>;
+}
+
+/**
+ * Task context object interface
+ * @template T The parameter type received by the current task
+ *
+ * Uses conditional types to implement parameter optionality:
+ * - When T is undefined, param is optional (undefined | undefined)
+ * - When T is not undefined, param is required (directly T, not optional)
+ */
+export interface TaskContext<T = undefined> {
+  next: NextFn;
+  finish: () => Promise<void>;
+  param: T extends undefined ? T | undefined : T;
+}

@@ -32,7 +32,13 @@ pnpm add @tool-chain/core
 - **TypeScript**: >= 4.5 (optional, but recommended for full type support)
 - **Browser**: Modern browsers (requires build tools like Webpack/Rollup)
 
-### 30-Second Quick Example
+### 30-Second Quick Examples
+
+The library provides two powerful tools for async workflow management:
+
+#### Option 1: Chains - Access all previous results
+
+Use `Chains` when you need to access multiple historical results:
 
 ```typescript
 import { Chains } from '@tool-chain/core';
@@ -51,23 +57,50 @@ console.log(result); // Output: 25
 // - .invoke() executes the entire chain and returns the result of the last step
 ```
 
-That's it! You've mastered the basics. Continue reading to learn about more powerful features.
+#### Option 2: Tasks - Clean parameter passing between steps
+
+Use `Tasks` when you prefer parameter-based flow control:
+
+```typescript
+import { Tasks } from '@tool-chain/core';
+
+await new Tasks()
+  .addTask(async ({ next }) => {
+    const data = 10;
+    await next(data * 2); // Pass 20 to next task
+  })
+  .addTask(async ({ param, next }) => {
+    // param = 20 (from previous task)
+    await next(param + 5); // Pass 25 to next task
+  })
+  .addTask(async ({ param }) => {
+    console.log(param); // Output: 25
+  })
+  .invoke();
+```
+
+That's it! You've mastered the basics. Continue reading to learn about more powerful features and when to use each tool.
 
 ## ✨ Core Features
 
-### 🔗 **Elegant Chaining API**
+### 🔗 **Two Powerful Execution Patterns**
 
+#### Chains - Multi-Result Access
 - Build async workflows using `.chain()` method
 - Access all historical results (`r1`, `r2`, `r3`...)
-- Automatic type inference with full TypeScript type safety throughout
-- Support mixing synchronous and asynchronous functions
-- Support for 20+ steps in a single chain
+- Perfect for pipelines where you need multiple intermediate results
+
+#### Tasks - Parameter Passing
+- Sequential task execution with `.addTask()` method
+- Clean parameter passing between tasks via `next(param)`
+- Perfect for workflows with linear data flow
 
 ### 🛡️ **Flexible Error Handling**
 
 - **Default Mode**: Errors are thrown directly, interrupting the chain
-- **Capture Mode**: Use `{ withoutThrow: true }` to capture errors per step
-- **Mixed Mode**: Flexibly mix both error handling strategies in the same chain
+- **Capture Mode**: Use `{ withoutThrow: true }` to capture errors per step (Chains only)
+- **Mixed Mode**: Flexibly mix both error handling strategies in the same chain (Chains only)
+- **Task Errors**: Errors propagate immediately, stopping subsequent tasks (Tasks)
 - Fine-grained error control without wrapping entire chains in try-catch
 
 ### 🎯 **Smart Retry and Timeout**
@@ -76,10 +109,12 @@ That's it! You've mastered the basics. Continue reading to learn about more powe
 - Flexible retry conditions (by error type, message, or regex)
 - Configurable retry delay (prevents resource waste from immediate retries)
 - Execution timeout control (prevents long hangs)
+- **Note**: Retry and timeout features are available for Chains; Tasks focuses on simplicity
 
 ### 📊 **Initial Data and State Management**
 
-- Pass initial data on construction, available as `r1` in the chain
+- **Chains**: Pass initial data on construction, available as `r1` in the chain
+- **Tasks**: Pass parameters between tasks using `next(param)`
 - Automatically preserves results from all steps
 - Flexible data flow and state management
 
@@ -87,8 +122,9 @@ That's it! You've mastered the basics. Continue reading to learn about more powe
 
 - Complete type definition files (`.d.ts`)
 - Strict mode compilation configuration
-- Smart type inference (supporting 20+ step chains)
+- Smart type inference (supporting 20+ step chains for Chains; full type safety for Tasks)
 - Perfect IDE autocomplete and type checking
+- Type-safe parameter passing in Tasks ensures compile-time safety
 
 ### 📦 **Dual Module Support**
 
@@ -98,7 +134,9 @@ That's it! You've mastered the basics. Continue reading to learn about more powe
 
 ## 📚 Detailed Usage Guide
 
-### Basic Chaining
+### Chains Usage
+
+#### Basic Chaining
 
 Create a simple chain flow to process data step by step:
 
@@ -121,7 +159,7 @@ console.log(result); // "25"
 - `r1` is the result of the first step, `r2` is the result of the second step, and so on
 - You must call `.invoke()` at the end to execute the entire chain
 
-### Factory Function
+#### Factory Function
 
 Use the `createChains()` factory function for more concise code:
 
@@ -136,7 +174,7 @@ const result = await createChains()
 console.log(result); // "HELLO"
 ```
 
-### Using Initial Data
+#### Using Initial Data
 
 Pass initial data on construction, which will be available as `r1` in the chain:
 
@@ -155,9 +193,9 @@ console.log(result); // 150
 - Building reusable data processing flows
 - Initializing chains in class methods
 
-### Error Handling - Deep Dive
+#### Error Handling - Deep Dive
 
-#### Method 1: Default Throw Mode
+##### Method 1: Default Throw Mode
 
 Errors are thrown directly, interrupting chain execution. Use try-catch to handle:
 
@@ -176,7 +214,7 @@ try {
 **Pros:** Simple and clear, errors interrupt immediately
 **Cons:** Requires wrapping entire chain in try-catch
 
-#### Method 2: Capture Mode (Recommended)
+##### Method 2: Capture Mode (Recommended)
 
 Use `{ withoutThrow: true }` to capture errors and wrap them as objects, chain continues:
 
@@ -212,7 +250,7 @@ console.log(result); // "DEFAULT"
 **Pros:** Flexible error handling, chain continues, can fallback
 **Cons:** Must check errors at each step
 
-#### Method 3: Mixed Mode
+##### Method 3: Mixed Mode
 
 Mix both error handling strategies in the same chain:
 
@@ -252,9 +290,9 @@ const result = await new Chains()
 - Capture mode error objects have a consistent format
 - Mixed use allows defensive programming at critical points while failing fast elsewhere
 
-### Retry and Timeout - Deep Dive
+#### Retry and Timeout - Deep Dive
 
-#### Basic Retry
+##### Basic Retry
 
 Automatically retry specified number of times on failure:
 
@@ -278,7 +316,7 @@ const result = await new Chains()
 2. On failure → wait retryDelay → retry
 3. Repeat until success or retries exhausted
 
-#### Smart Retry Conditions
+##### Smart Retry Conditions
 
 Only retry for specific errors, fail immediately for others:
 
@@ -314,7 +352,7 @@ retryWhen: 'timeout'; // Retry if error message contains 'timeout'
 retryWhen: /timeout|Rate limited/; // Retry if matches either term
 ```
 
-#### Timeout Control
+##### Timeout Control
 
 Prevent requests from hanging indefinitely:
 
@@ -344,7 +382,7 @@ const result = await new Chains()
 // Error: Timeout exceeded: operation took longer than 5000ms
 ```
 
-### Async Operations Chain
+#### Async Operations Chain
 
 Chain multiple async operations with automatic Promise handling:
 
@@ -371,7 +409,7 @@ const result = await new Chains()
   .invoke();
 ```
 
-### Mixing Sync and Async
+#### Mixing Sync and Async
 
 Freely mix synchronous and asynchronous operations:
 
@@ -395,6 +433,136 @@ const result = await new Chains()
   .invoke();
 
 console.log(result); // 25
+```
+
+### Tasks Usage
+
+The `Tasks` class provides a lightweight alternative for sequential task execution with parameter passing between tasks. Unlike `Chains` which is optimized for accessing all previous results, `Tasks` focuses on clean parameter-based flow control.
+
+#### Basic Task Execution
+
+Execute multiple tasks sequentially, where each task can call `next()` to pass data to the next task:
+
+```typescript
+import { Tasks, createTasks } from '@tool-chain/core';
+
+await new Tasks()
+  .addTask(async ({ next }) => {
+    console.log('Task 1');
+    await next(); // Continue to next task
+  })
+  .addTask(async ({ next }) => {
+    console.log('Task 2');
+    await next(42); // Pass parameter to next task
+  })
+  .addTask<number>(async ({ param }) => {
+    console.log(`Task 3 received: ${param}`); // 42
+  })
+  .invoke();
+```
+
+#### Parameter Passing Between Tasks
+
+Each task can receive parameters from the previous task with full type safety:
+
+```typescript
+import { createTasks } from '@tool-chain/core';
+
+await createTasks()
+  .addTask<string>(async ({ next }) => {
+    // This task passes a string to the next
+    await next('hello');
+  })
+  .addTask(async ({ param, next }) => {
+    // param is inferred as string (not optional)
+    console.log(param); // "hello"
+    await next({ id: 1, name: 'Alice' });
+  })
+  .addTask<{ id: number; name: string }>(async ({ param }) => {
+    // param is inferred as { id: number; name: string }
+    console.log(param.name); // "Alice"
+  })
+  .invoke();
+```
+
+#### Early Termination with finish()
+
+Stop task execution at any point using the `finish()` method:
+
+```typescript
+await new Tasks()
+  .addTask(async ({ next }) => {
+    console.log('Task 1');
+    await next();
+  })
+  .addTask(async ({ finish }) => {
+    console.log('Task 2');
+    await finish(); // Stop here, don't execute task 3
+  })
+  .addTask(async () => {
+    console.log('Task 3'); // Not executed
+  })
+  .invoke();
+```
+
+#### Automatic Task Termination
+
+If a task doesn't call `next()` or `finish()`, subsequent tasks stop executing automatically:
+
+```typescript
+await new Tasks()
+  .addTask(async ({ next }) => {
+    console.log('Task 1');
+    await next();
+  })
+  .addTask(async () => {
+    console.log('Task 2');
+    // No next() or finish() call - auto stop
+  })
+  .addTask(async () => {
+    console.log('Task 3'); // Not executed
+  })
+  .invoke();
+```
+
+#### Error Handling in Tasks
+
+Errors thrown in any task stop execution and are propagated:
+
+```typescript
+try {
+  await new Tasks()
+    .addTask(async ({ next }) => {
+      console.log('Task 1');
+      await next();
+    })
+    .addTask(async () => {
+      throw new Error('Task 2 failed');
+    })
+    .addTask(async () => {
+      console.log('Task 3'); // Not executed
+    })
+    .invoke();
+} catch (error) {
+  console.error('Error:', error.message); // "Task 2 failed"
+}
+```
+
+#### Factory Function
+
+Use `createTasks()` for more concise code:
+
+```typescript
+import { createTasks } from '@tool-chain/core';
+
+await createTasks()
+  .addTask(async ({ next }) => {
+    await next('data');
+  })
+  .addTask(async ({ param }) => {
+    console.log(param);
+  })
+  .invoke();
 ```
 
 ## 🎯 Common Use Cases
@@ -590,19 +758,27 @@ Options object for the `chain()` method.
 ### Project Structure
 
 ```
-toolchain_core/
+tool-chain-core/
 ├── src/
-│   ├── index.ts           # Main entry file
-│   └── types.ts           # TypeScript type definitions
+│   ├── index.ts           # Main entry file (exports all modules)
+│   ├── chains.ts          # Chains class and createChains factory function
+│   ├── tasks.ts           # Tasks class and createTasks factory function
+│   └── types.ts           # Shared type definitions
 ├── dist/                  # Build output
 │   ├── cjs/              # CommonJS format
 │   ├── esm/              # ESM format
 │   └── types/            # TypeScript definitions
 ├── tests/                # Test files
+│   ├── setup.ts          # Test utilities
+│   ├── tasks.test.ts     # Tasks tests
+│   ├── basic-features.test.ts
+│   ├── error-handling.test.ts
+│   ├── retry-and-timeout.test.ts
+│   └── other test files...
 ├── package.json
 ├── tsconfig.json
 ├── jest.config.js
-└── README.zh.md
+└── README.md
 ```
 
 ### Install Development Dependencies
