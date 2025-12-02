@@ -16,8 +16,10 @@
     "dist",
     "README.md",
     "README.zh.md",
+    "README.ja.md",
     "CHANGELOG.md",
     "CHANGELOG.zh.md",
+    "CHANGELOG.ja.md",
     "LICENSE"
   ],
   "publishConfig": {
