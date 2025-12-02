@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2025-12-02
+
+### Added
+- **Japanese Documentation**: New comprehensive Japanese documentation
+  - Complete README.ja.md in Japanese
+  - Full CHANGELOG.ja.md in Japanese with all version history
+  - Full support for Japanese-speaking users
+
+- **License File**: Added MIT LICENSE file to the project
+  - Proper licensing for open-source distribution
+  - Included in npm package distribution
+
+### Changed
+- Updated `files` field in package.json to include all documentation files
+  - Added README.ja.md for Japanese users
+  - Added CHANGELOG.ja.md for Japanese version history
+  - Added LICENSE file to distribution
+
 ## [1.1.1] - 2025-12-02
 
 ### Fixed

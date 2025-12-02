@@ -5,6 +5,24 @@
 格式基于[Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
 本项目遵循[语义化版本](https://semver.org/lang/zh-CN/spec/v2.0.0.html)。
 
+## [1.1.2] - 2025-12-02
+
+### 新增
+- **日文文档**：新增完整的日文文档
+  - 完整的 README.ja.md 日文版本
+  - 完整的 CHANGELOG.ja.md 日文版本（包含所有版本历史）
+  - 为日文用户提供完整支持
+
+- **许可证文件**：添加 MIT LICENSE 文件
+  - 开源项目的正式许可证
+  - 包含在 npm 包分发中
+
+### 变更
+- 更新 package.json 的 `files` 字段以包含所有文档文件
+  - 添加 README.ja.md 供日文用户使用
+  - 添加 CHANGELOG.ja.md 供日文版本历史查看
+  - 添加 LICENSE 文件到分发中
+
 ## [1.1.1] - 2025-12-02
 
 ### 修复
