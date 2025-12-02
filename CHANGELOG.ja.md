@@ -5,6 +5,15 @@
 形式は[Keep a Changelog](https://keepachangelog.com/ja/1.0.0/)に従い、
 このプロジェクトは[セマンティック バージョニング](https://semver.org/lang/ja/spec/v2.0.0.html)に準拠しています。
 
+## [1.1.1] - 2025-12-02
+
+### 修正
+- package.json に `files` フィールドを追加して npm パッケージ公開設定を修正
+  - 公開された npm パッケージに `dist/` フォルダのみが含まれるようになりました
+  - 開発ファイル（src、tests、.claude）は配布から除外されます
+  - 設定ファイル（eslintrc、jest.config、tsconfig.json）は含まれなくなりました
+  - パッケージサイズを削減し、インストール時に不要なファイルの取得を防ぎます
+
 ## [1.1.0] - 2024-12-02
 
 ### 追加

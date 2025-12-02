@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2025-12-02
+
+### Fixed
+- Fixed npm package publishing configuration by adding `files` field to package.json
+  - Now only `dist/` folder is included in published npm package
+  - Development files (src, tests, .claude) are excluded from distribution
+  - Configuration files (eslintrc, jest.config, tsconfig.json) are no longer included
+  - Reduces package size and prevents unnecessary files from being installed
+
 ## [1.1.0] - 2024-12-02
 
 ### Added

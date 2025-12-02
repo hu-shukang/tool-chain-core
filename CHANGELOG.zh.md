@@ -5,6 +5,15 @@
 格式基于[Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
 本项目遵循[语义化版本](https://semver.org/lang/zh-CN/spec/v2.0.0.html)。
 
+## [1.1.1] - 2025-12-02
+
+### 修复
+- 通过在 package.json 中添加 `files` 字段修复 npm 包发布配置
+  - 现在 npm 包中只包含 `dist/` 文件夹
+  - 开发文件（src、tests、.claude）已从发布中排除
+  - 配置文件（eslintrc、jest.config、tsconfig.json）不再包含在内
+  - 减少包的大小，防止安装时获得不必要的文件
+
 ## [1.1.0] - 2024-12-02
 
 ### 新增
