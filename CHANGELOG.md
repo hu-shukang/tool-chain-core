@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2025-12-11
+
+### Changed
+- Updated README documentation version references
+  - Updated version indicator from v1.0.0 to v1.1.2 in all README files
+  - Updated CHANGELOG links to point to GitHub repository URLs
+  - Improved formatting consistency in README.md
+
 ## [1.1.2] - 2025-12-02
 
 ### Added

@@ -1501,8 +1501,8 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ## 更新日志
 
-详见 [CHANGELOG.md](CHANGELOG.zh.md) 了解版本历史和更新内容。
+详见 [CHANGELOG.md](https://github.com/hu-shukang/tool-chain-db/blob/main/CHANGELOG.zh.md) 了解版本历史和更新内容。
 
 ---
 
-**最后更新：v1.0.0** | [GitHub 仓库](https://github.com/hu-shukang/tool-chain-core)
+**最后更新：v1.1.2** | [GitHub 仓库](https://github.com/hu-shukang/tool-chain-core)

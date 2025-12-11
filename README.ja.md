@@ -768,8 +768,8 @@ MIT License - 詳細は[LICENSE](LICENSE)ファイルを参照
 
 ## 更新ログ
 
-バージョン履歴と更新内容については[CHANGELOG.md](CHANGELOG.ja.md)を参照。
+バージョン履歴と更新内容については[CHANGELOG.md](https://github.com/hu-shukang/tool-chain-db/blob/main/CHANGELOG.ja.md)を参照。
 
 ---
 
-**最終更新: v1.0.0** | [GitHubリポジトリ](https://github.com/hu-shukang/tool-chain-core)
+**最終更新: v1.1.2** | [GitHubリポジトリ](https://github.com/hu-shukang/tool-chain-core)

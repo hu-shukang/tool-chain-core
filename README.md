@@ -86,11 +86,13 @@ That's it! You've mastered the basics. Continue reading to learn about more powe
 ### 🔗 **Two Powerful Execution Patterns**
 
 #### Chains - Multi-Result Access
+
 - Build async workflows using `.chain()` method
 - Access all historical results (`r1`, `r2`, `r3`...)
 - Perfect for pipelines where you need multiple intermediate results
 
 #### Tasks - Parameter Passing
+
 - Sequential task execution with `.addTask()` method
 - Clean parameter passing between tasks via `next(param)`
 - Perfect for workflows with linear data flow
@@ -931,8 +933,8 @@ If you find this library helpful, please consider giving it a ⭐ Star!
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) for version history and updates.
+See [CHANGELOG.md](https://github.com/hu-shukang/tool-chain-db/blob/main/CHANGELOG.md) for version history and updates.
 
 ---
 
-**Last Updated: v1.0.0** | [GitHub Repository](https://github.com/hu-shukang/tool-chain-core)
+**Last Updated: v1.1.2** | [GitHub Repository](https://github.com/hu-shukang/tool-chain-core)

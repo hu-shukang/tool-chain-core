@@ -5,6 +5,14 @@
 格式基于[Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
 本项目遵循[语义化版本](https://semver.org/lang/zh-CN/spec/v2.0.0.html)。
 
+## [1.1.3] - 2025-12-11
+
+### 变更
+- 更新 README 文档版本引用
+  - 将所有 README 文件中的版本标识从 v1.0.0 更新为 v1.1.2
+  - 更新 CHANGELOG 链接以指向 GitHub 仓库 URL
+  - 改进 README.md 的格式一致性
+
 ## [1.1.2] - 2025-12-02
 
 ### 新增

@@ -5,6 +5,14 @@
 形式は[Keep a Changelog](https://keepachangelog.com/ja/1.0.0/)に従い、
 このプロジェクトは[セマンティック バージョニング](https://semver.org/lang/ja/spec/v2.0.0.html)に準拠しています。
 
+## [1.1.3] - 2025-12-11
+
+### 変更
+- README ドキュメントのバージョン参照を更新
+  - すべての README ファイルでバージョン表示を v1.0.0 から v1.1.2 に更新
+  - CHANGELOG リンクを GitHub リポジトリ URL に更新
+  - README.md のフォーマット一貫性を改善
+
 ## [1.1.2] - 2025-12-02
 
 ### 追加
